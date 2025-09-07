@@ -30,7 +30,6 @@ in vec4 vs_Col;             // The array of vertex colors passed to the shader.
 out vec4 fs_Nor;            // The array of normals that has been transformed by u_ModelInvTr. This is implicitly passed to the fragment shader.
 out vec4 fs_LightVec;       // The direction in which our virtual light lies, relative to each vertex. This is implicitly passed to the fragment shader.
 out vec4 fs_Col;            // The color of each vertex. This is implicitly passed to the fragment shader.
-out vec4 fs_Pos;
 
 const vec4 lightPos = vec4(5, 4, 3, 1); //The position of our virtual light, which is used to compute the shading of
                                         //the geometry in the fragment shader.
@@ -38,7 +37,6 @@ const vec4 lightPos = vec4(5, 4, 3, 1); //The position of our virtual light, whi
 void main()
 {
     fs_Col = vs_Col;                         // Pass the vertex colors to the fragment shader for interpolation
-    fs_Pos = vs_Pos;
 
     mat3 invTranspose = mat3(u_ModelInvTr);
     fs_Nor = vec4(invTranspose * vec3(vs_Nor), 0);          // Pass the vertex normals to the fragment shader for interpolation.
@@ -47,10 +45,8 @@ void main()
                                                             // perpendicular to the surface after the surface is transformed by
                                                             // the model matrix.
 
-    float amp = 0.5 + max(sin(float(u_Time + 1892571.0)/30.0) *0.5 - 0.4, 0.0) * 8.0;
-    float divider = 1.0 / amp;
-    float wiggle = (0.0 + sin((float(u_Time)* 10.0 + vs_Pos.x * 20.0) / 60.0)) / divider;
-    vec4 modelposition = u_Model * (vs_Pos + vec4(0, wiggle, 0, 1));   // Temporarily store the transformed vertex positions for use below
+    float wiggle = (3.0 + sin(float(u_Time)/30.0)) / 8.0;
+    vec4 modelposition = u_Model * (vs_Pos + vs_Nor * wiggle);   // Temporarily store the transformed vertex positions for use below
 
     fs_LightVec = lightPos - modelposition;  // Compute the direction in which the light source lies
 
