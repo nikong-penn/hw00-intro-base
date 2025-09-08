@@ -47,9 +47,9 @@ void main()
                                                             // perpendicular to the surface after the surface is transformed by
                                                             // the model matrix.
 
-    float amp = 0.5 + max(sin(float(u_Time + 1892571.0)/40.0) *0.5 - 0.4, 0.0) * 8.0;
+    float amp = 0.5 + max(sin(float(u_Time + 1892571.0)/80.0) * 0.5 - 0.4, 0.0) * 8.0;
     float divider = 1.0 / amp;
-    float wiggle = (0.0 + sin((float(u_Time)* 8.2 + vs_Pos.x * 20.0) / 60.0)) / divider;
+    float wiggle = (0.0 + sin((float(u_Time)* 2.2 + vs_Pos.x * 20.0) / 60.0)) / divider;
     vec4 modelposition = u_Model * (vs_Pos + vec4(0, wiggle, 0, 1));   // Temporarily store the transformed vertex positions for use below
 
     fs_LightVec = lightPos - modelposition;  // Compute the direction in which the light source lies
