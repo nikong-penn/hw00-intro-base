@@ -8,19 +8,27 @@ import OpenGLRenderer from './rendering/gl/OpenGLRenderer';
 import Camera from './Camera';
 import {setGL} from './globals';
 import ShaderProgram, {Shader} from './rendering/gl/ShaderProgram';
+import CubeFlat from './geometry/CubeFlat';
 
 // Define an object with application parameters and button callbacks
 // This will be referred to by dat.GUI's functions that add GUI elements.
 const controls = {
   tesselations: 5,
   'Load Scene': loadScene, // A function pointer, essentially
+  'Shape #1': swapToIcosphere, // A function pointer, essentially
+  'Shape #2': swapToFlatCube, // A function pointer, essentially
+  'Shape #3': swapToNonFlatCube, // A function pointer, essentially
+  'Shape #4': swapToSquare, // A function pointer, essentially
 };
 
 let icosphere: Icosphere;
 let square: Square;
-let cube: Cube
+let cube: Cube;
+let cubeflat: CubeFlat
 let prevTesselations: number = 5;
 let uTime: number = 0.0;
+
+let render_type: number = 0;
 
 var palette = {
     color: [ 0, 95, 255 ],
@@ -33,6 +41,21 @@ function loadScene() {
   square.create();
   cube = new Cube(vec3.fromValues(0, 0, 0));
   cube.create();
+  cubeflat = new CubeFlat(vec3.fromValues(0, 0, 0));
+  cubeflat.create();
+}
+
+function swapToIcosphere() {
+  render_type = 0;
+}
+function swapToFlatCube() {
+  render_type = 1;
+}
+function swapToNonFlatCube() {
+  render_type = 2;
+}
+function swapToSquare() {
+  render_type = 3;
 }
 
 function main() {
@@ -47,7 +70,11 @@ function main() {
   // Add controls to the gui
   const gui = new DAT.GUI();
   gui.add(controls, 'tesselations', 0, 8).step(1);
-  gui.add(controls, 'Load Scene');
+  //gui.add(controls, 'Load Scene');
+  gui.add(controls, 'Shape #1');
+  gui.add(controls, 'Shape #2');
+  gui.add(controls, 'Shape #3');
+  gui.add(controls, 'Shape #4');
   gui.addColor(palette, 'color');
 
   // get canvas and webgl context
@@ -90,11 +117,19 @@ function main() {
 
     let color = vec4.fromValues(palette.color[0]/255.0, palette.color[1]/255.0, palette.color[2]/255.0, 1)
  
-    renderer.render(camera, lambert, [
-      icosphere,
-      // square,
-      // cube,
-    ], color, uTime);
+    if (render_type === 0) {
+      renderer.render(camera, lambert, [icosphere,], color, uTime);
+    } 
+    if (render_type === 1) {
+      renderer.render(camera, lambert, [cube,], color, uTime);
+    } 
+    if (render_type === 2) {
+      renderer.render(camera, lambert, [cubeflat,], color, uTime);
+    } 
+    if (render_type === 3) {
+      renderer.render(camera, lambert, [square,], color, uTime);
+    } 
+
     stats.end();
 
     // Tell the browser to call `tick` again whenever it renders a new frame

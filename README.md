@@ -1,3 +1,16 @@
+# Solid Description of my Project
+
+- Geometry
+ I implented 2 different cube geometry with different vertex data so they have different shading properties. I also added buttons to switch between rending different geometry in the GUI.
+ 
+- Vertex Shader
+ The geometry is being displaces by a sin wave in the y cordinate, giving it a wave motion effect. i also made it so that it makes periodic bigger "jump" motions
+
+- Fragment Shader
+The fragment shader is a simple perlin noise based effect with a peak effect, the highest values making the color brighter.
+
+I wish I had more time to add more cool effects! might expand on it more after the deadline ^^)
+
 # HW 0: Intro to Javascript and WebGL
 
 <p align="center">
