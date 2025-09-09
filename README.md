@@ -9,6 +9,8 @@
 - Fragment Shader
 The fragment shader is a simple perlin noise based effect with a peak effect, the highest values making the color brighter.
 
+To see the effects, view on live demo: https://nikong-penn.github.io/hw00-intro-base/ 
+
 I wish I had more time to add more cool effects! might expand on it more after the deadline and make it aawesoem
 
 # HW 0: Intro to Javascript and WebGL
